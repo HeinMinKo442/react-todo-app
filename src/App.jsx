@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import TodoItem from "./TodoItem";
 import EditForm from "./editForm";
 import TodoForm from "./TodoForm";
 import { CiSearch } from "react-icons/ci";
 import { IoCreateOutline, IoClose } from "react-icons/io5";
+import Navbar from "./layouts/Navbar";
+import { AppContext } from "./Theme";
 
 const getTodayDate = () => {
   const today = new Date();
@@ -15,6 +17,9 @@ const getTodayDate = () => {
 };
 
 const App = () => {
+  // useTheme for dark mode
+  const { mode } = useContext(AppContext);
+
   const [content, setContent] = useState("");
   const [todoList, setTodoList] = useState([
     { id: 1, content: "Study React from basic", deadline: "2024-9-19" },
@@ -36,7 +41,8 @@ const App = () => {
 
   const handleAdd = (content, deadline) => {
     if (content == "") {
-      setError("Input value is not empty");
+      // setError("Input value is not empty");
+      return;
     } else {
       const id = todoList.length ? todoList[todoList.length - 1].id + 1 : 1;
       setTodoList([...todoList, { id, content, deadline }]);
@@ -48,7 +54,6 @@ const App = () => {
   };
 
   const remove = (id) => {
-    // console.log(id)
     setFileteredSearch(filteredSearch.filter((item) => item.id !== id));
     setTodoList(todoList.filter((item) => item.id !== id));
   };
@@ -59,6 +64,7 @@ const App = () => {
     setShowForm(true);
     setShowEdit(true);
     setShowSearch(false);
+    setError("");
   };
 
   const handleEditSubmit = (e) => {
@@ -102,113 +108,147 @@ const App = () => {
   };
 
   return (
-    <div className="mt-20 max-w-[640px] flex flex-col justify-end mx-auto border-2 p-4 rounded-md">
-      <div className="flex flex-row gap-6 mb-3 justify-between items-center">
-        {/* Button show/off add form  */}
-        {showForm ? (
-          <IoClose
-            className="text-red-700 text-3xl cursor-pointer"
-            onClick={() => {
-              setShowForm(!showForm);
-              setShowSearch(false);
-            }}
-          />
-        ) : (
-          <IoCreateOutline
-            className="text-green-700 text-3xl cursor-pointer"
-            onClick={() => {
-              setShowForm(!showForm);
-              setShowSearch(false);
-            }}
-          />
-        )}
-
-        {/* Search input and button for search feature */}
-        {showSearch && (
-          <div className="relative w-[70%]">
-            <input
-              type="text"
-              placeholder="Search...."
-              onChange={(e) => setSearch(e.target.value)}
-              value={search}
-              className="w-full py-1 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            <button
-              onClick={handleSearch}
-              className="absolute right-0 top-0 bottom-0 bg-slate-500 text-white py-1 px-4 rounded-r-md hover:bg-slate-600 focus:outline-none
-              "
-            >
-              Search
-            </button>
-          </div>
-        )}
-
-        {/* Search Button */}
-        <button
-          onClick={() => {
-            setShowSearch(!showSearch);
-            setShowForm(false);
-            setError("");
-            setFileteredSearch([]);
-          }}
-          className="text-3xl font-bold text-gray-900"
-        >
-          <CiSearch />
-        </button>
-      </div>
-
-      {/* Error Message */}
-      {error ? <p className="text-red-500 text-center m-0 p-0">{error}</p> : ""}
-
-      {/* Form Edit form and Add form */}
-      {showForm && (
-        <>
-          {showEdit ? (
-            <EditForm
-              handleEditSubmit={handleEditSubmit}
-              editData={editData}
-              editInput={editInput}
-              setEditInput={setEditInput}
+    <div
+      style={{
+        background: mode === "dark" ? "black" : "white",
+        color: mode === "dark" ? "white" : "black",
+        height: "100vh",
+      }}
+    >
+      <Navbar />
+      <div className="mt-10 max-w-[640px] flex flex-col justify-end mx-auto border-2 p-4 rounded-md">
+        <div className="flex flex-row gap-6 mb-3 justify-between items-center">
+          {/* Button show/off add form  */}
+          {showForm ? (
+            <IoClose
+              className="text-red-700 text-3xl cursor-pointer"
+              onClick={() => {
+                setShowForm(!showForm);
+                setShowSearch(false);
+              }}
             />
           ) : (
-            <TodoForm
-              content={content}
-              setContent={setContent}
-              deadline={deadline}
-              setDeadline={setDeadline}
-              handleAdd={handleAdd}
-              error={error}
+            <IoCreateOutline
+              className="text-green-700 text-3xl cursor-pointer"
+              onClick={() => {
+                setShowForm(!showForm);
+                setShowSearch(false);
+                setError("");
+              }}
             />
           )}
-        </>
-      )}
 
-      {/* Display Filetered Data and All todo list data */}
-      <ul className="mt-4">
-        {filteredSearch.length > 0 ? (
-          filteredSearch.map((item) => (
-            <TodoItem
-              key={item.id}
-              remove={remove}
-              handleEdit={handleEdit}
-              item={item}
-            />
-          ))
+          {/* Search input and button for search feature */}
+          {showSearch && (
+            <div
+              className="relative w-[70%]"
+              style={{
+                background: mode === "dark" ? "black" : "white",
+                color: mode === "dark" ? "black" : "white",
+              }}
+            >
+              <input
+                type="text"
+                placeholder="Search...."
+                onChange={(e) => setSearch(e.target.value)}
+                value={search}
+                className="w-full py-1 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <button
+                onClick={handleSearch}
+                className="absolute right-0 top-0 bottom-0 bg-slate-500 text-white py-1 px-4 rounded-r-md hover:bg-slate-600 focus:outline-none
+              "
+              >
+                Search
+              </button>
+            </div>
+          )}
+
+          {/* Search Button */}
+          <button
+            onClick={() => {
+              setShowSearch(!showSearch);
+              setShowForm(false);
+              setError("");
+              setFileteredSearch([]);
+            }}
+            className="text-3xl font-bold text-gray-900"
+          >
+            {showSearch ? (
+              <IoClose
+                className="text-red-700 text-3xl cursor-pointer"
+                onClick={() => {
+                  setShowForm(!showForm);
+                  setShowSearch(false);
+                }}
+              />
+            ) : (
+              <CiSearch
+                style={{
+                  color: mode === "dark" ? "green" : "black",
+                }}
+              />
+            )}
+          </button>
+        </div>
+
+        {/* Error Message */}
+        {error ? (
+          <p className="text-red-500 text-center m-0 p-0">{error}</p>
         ) : (
+          ""
+        )}
+
+        {/* Form Edit form and Add form */}
+        {showForm && (
           <>
-            {todoList.length > 0
-              ? todoList.map((item) => (
-                  <TodoItem
-                    key={item.id}
-                    remove={remove}
-                    handleEdit={handleEdit}
-                    item={item}
-                  />
-                ))
-              : "No to List here!"}
+            {showEdit ? (
+              <EditForm
+                handleEditSubmit={handleEditSubmit}
+                editData={editData}
+                editInput={editInput}
+                setEditInput={setEditInput}
+              />
+            ) : (
+              <TodoForm
+                content={content}
+                setContent={setContent}
+                deadline={deadline}
+                setDeadline={setDeadline}
+                handleAdd={handleAdd}
+                error={error}
+              />
+            )}
           </>
         )}
-      </ul>
+
+        {/* Display Filetered Data and All todo list data */}
+        <ul className="mt-4">
+          {filteredSearch.length > 0 ? (
+            filteredSearch.map((item) => (
+              <TodoItem
+                key={item.id}
+                remove={remove}
+                handleEdit={handleEdit}
+                item={item}
+              />
+            ))
+          ) : (
+            <>
+              {todoList.length > 0
+                ? todoList.map((item) => (
+                    <TodoItem
+                      key={item.id}
+                      remove={remove}
+                      handleEdit={handleEdit}
+                      item={item}
+                    />
+                  ))
+                : "No to List here!"}
+            </>
+          )}
+        </ul>
+      </div>
     </div>
   );
 };

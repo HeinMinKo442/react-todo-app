@@ -1,6 +1,16 @@
+import { useContext } from "react";
+import { AppContext } from "./Theme";
+
 const EditForm = ({ editInput, setEditInput, handleEditSubmit }) => {
+  const { mode } = useContext(AppContext);
   return (
-    <form onSubmit={handleEditSubmit}>
+    <form
+      onSubmit={handleEditSubmit}
+      style={{
+        background: mode === "dark" ? "black" : "white",
+        color: mode === "dark" ? "black" : "white",
+      }}
+    >
       <input
         type="text"
         className="w-full py-2 px-4 border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 rounded-lg"

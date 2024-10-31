@@ -1,3 +1,6 @@
+import { useContext } from "react";
+import { AppContext } from "./Theme";
+
 const TodoForm = ({
   content,
   setContent,
@@ -6,8 +9,15 @@ const TodoForm = ({
   deadline,
   setDeadline,
 }) => {
+  const { mode } = useContext(AppContext);
   return (
-    <div className="flex flex-col p-2">
+    <div
+      className="flex flex-col p-2"
+      style={{
+        background: mode === "dark" ? "black" : "white",
+        color: mode === "dark" ? "black" : "white",
+      }}
+    >
       <div className="flex flex-row gap-2 justify-between items-center">
         <input
           type="text"
