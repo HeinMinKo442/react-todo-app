@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import TodoItem from "./TodoItem";
-import EditForm from "./editForm";
+import EditForm from "./EditForm";
 import TodoForm from "./TodoForm";
 import { CiSearch } from "react-icons/ci";
 import { IoCreateOutline, IoClose } from "react-icons/io5";
