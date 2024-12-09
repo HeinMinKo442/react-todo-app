@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { AppContext } from "./Theme";
+import { AppContext } from "../Theme";
 
 const EditForm = ({ editInput, setEditInput, handleEditSubmit }) => {
   const { mode } = useContext(AppContext);
@@ -8,7 +8,7 @@ const EditForm = ({ editInput, setEditInput, handleEditSubmit }) => {
       onSubmit={handleEditSubmit}
       style={{
         background: mode === "dark" ? "black" : "white",
-        color: mode === "dark" ? "black" : "white",
+        color: mode === "dark" ? "white" : "black",
       }}
     >
       <input

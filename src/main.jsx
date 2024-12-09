@@ -6,6 +6,7 @@ import Theme from "./Theme";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
+
     <Theme />
   </StrictMode>
 );

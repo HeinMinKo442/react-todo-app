@@ -1,11 +1,12 @@
 import { useContext, useState } from "react";
-import TodoItem from "./TodoItem";
-import EditForm from "./EditForm";
-import TodoForm from "./TodoForm";
+import TodoItem from "./components/TodoItem";
+import EditForm from "./components/EditForm";
+import TodoForm from "./components/TodoForm";
 import { CiSearch } from "react-icons/ci";
 import { IoCreateOutline, IoClose } from "react-icons/io5";
 import Navbar from "./layouts/Navbar";
 import { AppContext } from "./Theme";
+import Register from "./components/Register";
 
 const getTodayDate = () => {
   const today = new Date();
@@ -115,6 +116,7 @@ const App = () => {
         height: "100vh",
       }}
     >
+      <Register />
       <Navbar />
       <div className="mt-10 max-w-[640px] flex flex-col justify-end mx-auto border-2 p-4 rounded-md">
         <div className="flex flex-row gap-6 mb-3 justify-between items-center">
@@ -144,7 +146,7 @@ const App = () => {
               className="relative w-[70%]"
               style={{
                 background: mode === "dark" ? "black" : "white",
-                color: mode === "dark" ? "black" : "white",
+                color: mode === "dark" ? "white" : "black",
               }}
             >
               <input

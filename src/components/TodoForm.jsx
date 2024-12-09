@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { AppContext } from "./Theme";
+import { AppContext } from "../Theme";
 
 const TodoForm = ({
   content,
@@ -15,7 +15,7 @@ const TodoForm = ({
       className="flex flex-col p-2"
       style={{
         background: mode === "dark" ? "black" : "white",
-        color: mode === "dark" ? "black" : "white",
+        color: mode === "dark" ? "white" : "black",
       }}
     >
       <div className="flex flex-row gap-2 justify-between items-center">
