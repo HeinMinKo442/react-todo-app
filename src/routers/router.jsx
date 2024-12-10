@@ -1,22 +1,18 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import App from "../App";
 import NotFound from "../NotFound";
 import Register from "../components/Register";
 import Login from "../components/Login";
+import Home from "../home/Home";
 
 const Router = () => {
-  const base = "react-todo-app";
+  // const base = "react-todo-app";
   const config = createBrowserRouter([
     {
-      path: `${base}/`,
-      element: <App />,
+      path: `/`,
+      element: <Home />,
     },
     {
       path: `/register`,
-      element: <Register />,
-    },
-    {
-      path: `${base}/register`,
       element: <Register />,
     },
     {
@@ -24,11 +20,7 @@ const Router = () => {
       element: <Login />,
     },
     {
-      path: `${base}/login`,
-      element: <Login />,
-    },
-    {
-      path: `/hello`,
+      path: `/*`,
       element: <NotFound />,
     },
   ]);

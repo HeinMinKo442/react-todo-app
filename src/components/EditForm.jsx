@@ -6,14 +6,19 @@ const EditForm = ({ editInput, setEditInput, handleEditSubmit }) => {
   return (
     <form
       onSubmit={handleEditSubmit}
-      style={{
-        background: mode === "dark" ? "black" : "white",
-        color: mode === "dark" ? "white" : "black",
-      }}
+      className={`${
+        mode == "dark"
+          ? "bg-dark-bg text-dark-textPrimary"
+          : "bg-light-bg text-light-textPrimary"
+      }`}
     >
       <input
         type="text"
-        className="w-full py-2 px-4 border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 rounded-lg"
+        className={`w-full py-2 px-4 border focus:outline-none focus:ring rounded-lg ${
+          mode == "dark"
+            ? "bg-dark-bg placeholder-dark-textSecondary focus:ring-dark-textAccent border-dark-border"
+            : "bg-light-bg placeholder-light-textSecondary focus:ring-light-textAccent border-light-border"
+        }`}
         name="content"
         value={editInput}
         onChange={(e) => setEditInput(e.target.value)}

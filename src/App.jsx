@@ -109,21 +109,17 @@ const App = () => {
   };
 
   return (
-    <div
-      style={{
-        background: mode === "dark" ? "black" : "white",
-        color: mode === "dark" ? "white" : "black",
-        height: "100vh",
-      }}
-    >
-      <Register />
-      <Navbar />
+    <div>
       <div className="mt-10 max-w-[640px] flex flex-col justify-end mx-auto border-2 p-4 rounded-md">
         <div className="flex flex-row gap-6 mb-3 justify-between items-center">
           {/* Button show/off add form  */}
           {showForm ? (
             <IoClose
-              className="text-red-700 text-3xl cursor-pointer"
+              className={` text-3xl cursor-pointer ${
+                mode == "dark"
+                  ? "text-dark-btnPrimary"
+                  : "text-light-btnPrimary"
+              }`}
               onClick={() => {
                 setShowForm(!showForm);
                 setShowSearch(false);
@@ -131,7 +127,11 @@ const App = () => {
             />
           ) : (
             <IoCreateOutline
-              className="text-green-700 text-3xl cursor-pointer"
+              className={` text-3xl cursor-pointer ${
+                mode == "dark"
+                  ? "text-dark-btnPrimary"
+                  : "text-light-btnPrimary"
+              }`}
               onClick={() => {
                 setShowForm(!showForm);
                 setShowSearch(false);
@@ -143,18 +143,18 @@ const App = () => {
           {/* Search input and button for search feature */}
           {showSearch && (
             <div
-              className="relative w-[70%]"
-              style={{
-                background: mode === "dark" ? "black" : "white",
-                color: mode === "dark" ? "white" : "black",
-              }}
+              className={`relative w-[75%] ${
+                mode === "dark"
+                  ? "bg-dark-bg text-dark-textPrimary"
+                  : "bg-light-bg text-light-textPrimary"
+              }`}
             >
               <input
                 type="text"
                 placeholder="Search...."
                 onChange={(e) => setSearch(e.target.value)}
                 value={search}
-                className="w-full py-1 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full py-1 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
               />
               <button
                 onClick={handleSearch}
@@ -186,9 +186,11 @@ const App = () => {
               />
             ) : (
               <CiSearch
-                style={{
-                  color: mode === "dark" ? "green" : "black",
-                }}
+                className={`${
+                  mode == "dark"
+                    ? "text-dark-btnPrimary"
+                    : "text-light-btnPrimary"
+                }`}
               />
             )}
           </button>
@@ -196,7 +198,13 @@ const App = () => {
 
         {/* Error Message */}
         {error ? (
-          <p className="text-red-500 text-center m-0 p-0">{error}</p>
+          <p
+            className={`text-center m-0 p-0 ${
+              mode == "dark" ? "text-dark-error" : "text-light-error"
+            }`}
+          >
+            {error}
+          </p>
         ) : (
           ""
         )}
