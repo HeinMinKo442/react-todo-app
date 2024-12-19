@@ -6,15 +6,15 @@ const TodoItem = ({ item, handleEdit, remove }) => {
   const [mark, setMark] = useState(false);
 
   const handleMark = () => {
-    setMark(true);
+    setMark(!mark);
   };
   return (
-    <div className="" onClick={() => handleMark()}>
+    <div className="">
       <li
         key={item.id}
         className="flex justify-between items-center py-2 border-b"
       >
-        <div className="cursor-pointer">
+        <div className="cursor-pointer" onClick={() => handleMark()}>
           {mark ? (
             <p className="line-through">{item.content}</p>
           ) : (
